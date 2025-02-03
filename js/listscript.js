@@ -41,35 +41,55 @@ $(document).ready(function () {
     fetchUsers();
 
     $("#addUserForm").submit(function (event) {
-        event.preventDefault();
-        console.log("Adding new user...");
+    event.preventDefault();
+    console.log("Adding new user...");
 
-        const userName = $("#addUserName").val();
-        const userJob = $("#addUserJob").val();
+    const firstName = $("#addFirstName").val();  // Getting first name
+    const lastName = $("#addLastName").val();    // Getting last name
+    const email = $("#addEmail").val();          // Getting email
 
-        if (!userName || !userJob) {
-            alert("Please fill in all fields.");
-            return;
-        }
+    if (!firstName || !lastName || !email) {
+        alert("Please fill in all fields.");
+        return;
+    }
 
-        fetch("https://reqres.in/api/users", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: userName, job: userJob })
+    fetch("https://reqres.in/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: firstName, job: lastName })  // Adjusted the data sent to the API
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("User added successfully:", data);
+            alert("User added successfully with ID: " + data.id);
+            $("#addUserModal").modal("hide");
+
+            // Move focus to a visible button after closing modal
+            $("#addUserButton").focus();
+
+            // Reset the form
+            $("#addUserForm")[0].reset();
+
+            // Add the new user to the UI with the correct data
+            const newUserCard = $(`
+                <div class="card mt-2" data-id="${data.id}">
+                    <div class="card-body d-flex align-items-center">
+                        <img src="image/jpeg-featured-image.jpg" alt="${data.first_name}" class="rounded-circle mr-3" width="50">
+                        <div>
+                            <h6 class="mb-0 userName">${firstName} ${lastName}</h6>
+                            <p class="text-muted mb-0 userEmail">${email}</p> <!-- Display email -->
+                        </div>
+                        <button class="btn btn-warning btn-sm ml-auto editUser" data-id="${data.id}" data-firstname="${firstName}" data-lastname="${lastName}" data-email="${email}">Edit</button>
+                        <button class="btn btn-danger btn-sm ml-2 deleteUser" data-id="${data.id}" data-name="${firstName} ${lastName}">Delete</button>
+                    </div>
+                </div>
+            `);
+
+            // Append the new user card to the user container
+            $("#userData").prepend(newUserCard);
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log("User added successfully:", data);
-                alert("User added successfully with ID: " + data.id);
-                $("#addUserModal").modal("hide");
-                
-                // Move focus to a visible button after closing modal
-                $("#addUserButton").focus();
-                $("#addUserForm")[0].reset();
-                fetchUsers();
-            })
-            .catch(error => console.error("Error adding user:", error));
-    });
+        .catch(error => console.error("Error adding user:", error));
+});
 
     $(document).on("click", ".editUser", function () {
     currentEditingUserId = $(this).data("id");

@@ -9,15 +9,16 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+   box-sizing: border-box;
 }
 
 /* Centered Login Form Container */
 .login-container {
   background: #fff;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 350px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 400px;
   text-align: center;
 }
 
@@ -29,24 +30,28 @@ body {
 
 .form-group label {
   font-weight: bold;
+  font-size: 14px;
 }
 
 .form-control {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 /* Button Styling */
 .btn {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background: #007BFF;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .btn:hover {
