@@ -7,26 +7,55 @@
   <link rel="stylesheet" href="css/loginstyle.css"> 
 </head>
 <body>
+  <div class="wrapper">
+    <input type="checkbox" id="check">
+    <div class="container login-box">
 
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" required>
-      </div>
-      <button type="submit" class="btn">Login</button>
-    </form>
+      <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" required>
+          </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
 
-    <div id="loginMessage">
-      <h3 id="loginSuccessMessage" style="display: none;">Login Successful!</h3>
-      <h3 id="loginFailedMessage" style="display: none;">Login Failed! Please check your credentials.</h3>
+        <div id="loginMessage">
+          <h3 id="loginSuccessMessage">Login Successful!</h3>
+          <h3 id="loginFailedMessage">Login Failed! Please check your credentials.</h3>
+        </div>
+         <p>Don't have an account? <label for="check" class="toggle-label">Register</label></p>
+      </div>
+
+      <!-- Registration Form -->
+      <div class="login-container register-box">
+        <h2>Register</h2>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="registerEmail">Email:</label>
+            <input type="email" class="form-control" id="registerEmail" placeholder="Enter Email" required />
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Password:</label>
+            <input type="password" class="form-control" id="registerPassword" placeholder="Enter Password" required />
+          </div>
+          <button type="submit" class="btn">Register</button>
+        </form>
+
+        <div id="registerMessage">
+          <h3 id="registerSuccessMessage">Registration Successful!</h3>
+          <h3 id="registerFailedMessage">Registration Failed! Please try again.</h3>
+        </div>
+        <p>Already have an account? <label for="check" class="toggle-label">Login</label></p> 
+      </div>
     </div>
-  </div> 
+  </div>
+
 
   <script src="js/loginscript.js"></script>
 </body>

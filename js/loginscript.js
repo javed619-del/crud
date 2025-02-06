@@ -15,12 +15,21 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
   document.getElementById('loginSuccessMessage').style.display = 'none';
   document.getElementById('loginFailedMessage').style.display = 'none';
 
-  // Check if entered email & password match the expected credentials
+  // Check if the email is correct but the password is wrong
+  if (email === validEmail && password !== validPassword) {
+    console.error("The password does not match.");
+    document.getElementById('loginMessage').style.display = 'block';
+    document.getElementById('loginFailedMessage').style.display = 'block';
+    document.getElementById('loginFailedMessage').innerText = "The password does not match.";
+    return;
+  }
+
+  // Check if the email or password is incorrect
   if (email !== validEmail || password !== validPassword) {
     console.error("Invalid credentials.");
     document.getElementById('loginMessage').style.display = 'block';
     document.getElementById('loginFailedMessage').style.display = 'block';
-    document.getElementById('loginFailedMessage').innerText = "Invalid email or password.";
+    document.getElementById('loginFailedMessage').innerText = "Login Failed! Please check your credentials.";
     return;
   }
 
@@ -67,4 +76,52 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     document.getElementById('loginFailedMessage').style.display = 'block';
     document.getElementById('loginFailedMessage').innerText = "An error occurred. Please try again.";
   });
+});
+
+
+ // Register Form Submission
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+
+    console.log("Register Form Submitted");
+    console.log("Entered Email:", email);
+    console.log("Entered Password:", password || "No password entered");
+
+    // Hide previous messages
+    document.getElementById('registerMessage').style.display = 'none';
+    document.getElementById('registerSuccessMessage').style.display = 'none';
+    document.getElementById('registerFailedMessage').style.display = 'none';
+
+    fetch('https://reqres.in/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json().then(data => ({ status: response.status, body: data }))) // Get response status & body
+    .then(({ status, body }) => {
+        console.log("Response Status:", status);
+        console.log("Response Body:", body);
+
+        if (status === 200 && body.id) {
+            console.log("Registration Successful! User ID:", body.id);
+            document.getElementById('registerMessage').style.display = 'block';
+            document.getElementById('registerSuccessMessage').style.display = 'block';
+        } else if (status === 400 && body.error === "Missing password") {
+            console.error("Error: Missing password");
+            document.getElementById('registerMessage').style.display = 'block';
+            document.getElementById('registerFailedMessage').style.display = 'block';
+            document.getElementById('registerFailedMessage').innerText = "Missing password";
+        } else {
+            throw new Error("Registration Failed! Please try again.");
+        }
+    })
+    .catch(error => {
+        console.error("Registration Error:", error.message);
+        document.getElementById('registerMessage').style.display = 'block';
+        document.getElementById('registerFailedMessage').style.display = 'block';
+        document.getElementById('registerFailedMessage').innerText = error.message;
+    });
 });

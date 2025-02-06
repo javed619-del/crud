@@ -1,28 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-
-/* General body styling */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Poppins, sans-serif;
   background-color: #f4f4f4;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-   box-sizing: border-box;
 }
 
-/* Centered Login Form Container */
+/* Wrapper for flipping effect */
+.wrapper {
+  width: 400px;
+  height: 450px;
+  perspective: 1000px;
+}
+
+/* Flip container */
+.container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+/* Apply Flip when Checkbox is Checked */
+#check {
+  display: none;
+}
+
+#check:checked ~ .container {
+  transform: rotateY(180deg);
+}
+
+/* Make only the login/register toggle labels clickable */
+.toggle-label {
+  color: #007BFF;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toggle-label:hover {
+  color: #0056b3;
+}
+
+
+/* Login & Register Forms */
 .login-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   background: #fff;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  backface-visibility: hidden;
   text-align: center;
 }
 
-/* Form Styling */
+/* Register Form - Back of the Card */
+.register-box {
+  transform: rotateY(180deg);
+}
+
+/* Form Fields */
 .form-group {
   text-align: left;
   margin-bottom: 15px;
@@ -42,7 +86,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Button Styling */
+/* Button */
 .btn {
   width: 100%;
   padding: 12px;
@@ -58,18 +102,18 @@ body {
   background: #0056b3;
 }
 
-/* Message Styling */
-#loginMessage {
+/* Messages */
+#loginMessage, #registerMessage {
   margin-top: 15px;
   display: none;
 }
 
-#loginSuccessMessage {
+#loginSuccessMessage, #registerSuccessMessage {
   color: green;
   display: none;
 }
 
-#loginFailedMessage {
+#loginFailedMessage, #registerFailedMessage {
   color: red;
   display: none;
 }
